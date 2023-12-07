@@ -1,0 +1,29 @@
+body{
+    background: linear-gradient(140deg,rgb(49, 49, 234),white );
+    height: 100vh;
+    display: flex;
+}
+.main{
+    background-color: rgb(255, 255, 255);
+    margin-top: 100px;
+    margin-left: 450px;
+    height: 400px;
+    width: 400px;
+    border-radius: 20px;
+     background-image:url( C:\Icanio\emaillogin\src\components\Assests\images.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+    
+   
+}
+
+.email-textfield{
+ padding-top: 200px;
+}
+.button{
+    padding-top: 10px;
+   padding-left: 45px;
+}
+/* .btnn{
+    background: linear-gradient(140deg,rgb(49, 49, 234),white );
+} */

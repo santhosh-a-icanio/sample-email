@@ -1,0 +1,249 @@
+
+import './email.css'
+import { Box, Snackbar } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useState } from 'react';
+import axios from 'axios'
+
+
+
+
+const validationSchema = yup.object({
+    email: yup
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+    password: yup
+      .string('Enter your password')
+      .min(8, 'minimum 8 characters')
+      .required('Password is required'),
+  });
+
+
+const Email = () => {
+  
+      
+      const formik = useFormik({
+        initialValues: {
+          email: '',
+          password: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+          console.log(values) 
+        },
+      });
+
+      const [openSnackbar, setOpenSnackbar] = useState(false);
+      const [loginSuccess, setLoginSuccess] = useState(false);
+    
+      const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+      };
+
+      const handleLogin = () => {
+        const isValidEmail = formik.values.email ;
+        const isValidPassword =  formik.values.password  ;
+        const email = "sandy@gmail.com" ;
+        const password= "santhosh";
+        if ((isValidEmail === email  && isValidPassword === password )) {
+         
+          setLoginSuccess(true);
+          setOpenSnackbar(true);
+          
+        } else {
+         
+          setLoginSuccess(false);
+          setOpenSnackbar(true);
+          
+        }
+      };
+  return (
+    
+     <div >
+       
+       <Box className="main">
+       <div className='img-1'></div>
+       <form onSubmit={formik.handleSubmit}>
+       <div className='img1'> </div>
+         <div className='email-textfield'>
+        
+          <TextField
+           email
+           variant="standard"
+           style={{width:300}}
+           id="email"
+           name="email"
+           label="Email"
+           value={formik.values.email}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+           error={formik.touched.email && (formik.errors.email)}
+           helperText={formik.touched.email && formik.errors.email}
+          />
+         </div>
+         
+        <div className='password-textfield'>  
+        <TextField
+          password
+          variant="standard"
+          style={{width:300}}
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && (formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        </div>
+       <div className='button'>
+       <Stack direction="row" spacing={2}>
+      {/* <Button variant="contained" disabled style={{width:300}} color="primary" type="submit">submit</Button> */}
+      <Button color="primary" variant="contained" style={{width:300, }}
+       className="btnn" 
+       type="submit" 
+       onClick={handleLogin }>
+          Login
+        </Button>
+    </Stack>
+    <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000} 
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          message={
+          loginSuccess
+            ? 'Login successful!' 
+            : 'Incorrect email or password.'
+        }
+      />
+       
+       </div>
+       </form>
+        </Box> 
+     </div>  
+
+  )
+}
+
+export default Email;
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// const  Email= () => {
+//   const [users, setUsers] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+   
+//     axios.get('https://jsonplaceholder.typicode.com/posts/1/comments')
+//       .then(res => {
+//         setUsers(res.data);
+//         setLoading(false);
+//         console.log(res)
+//       })
+//       .catch(error => {
+//         console.error('Error fetching data:', error);
+//         setLoading(false);
+        
+//       });
+//   },[]); 
+
+//   return (
+//     <div>
+//       <h1>User List</h1>
+//       {loading ? (
+//         <p>Loading...</p>
+//       ) : (
+//         <ol>
+//           {users.map(user => (
+//             <li key={user.id}>{user.name}{user.body}</li>
+//           ))}
+//         </ol>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Email;
+
+
+
+
+
+// import { useState } from "react";
+// import axios from "axios";
+
+// function Email() {
+//   const [email, setEmail] = useState('')
+//   const [password, setPassword] = useState('')
+//   //console.log({ email, password })
+//   const handleEmail = (e) => {
+//     setEmail(e.target.value)
+//   }
+
+//   const handlePassword = (e) => {
+//     setPassword(e.target.value)
+//   }
+
+//   const handleApi = () => {
+//     console.log({ email, password })
+//     axios.post('https://reqres.in/api/login', {
+//       email: email,
+//       password: password
+//     }).then(result => {
+//       console.log('success',result.data)
+      
+//     })
+//       .catch(error => {
+//         console.log('error',error)
+//       })
+//   }
+
+//   return (
+//     <div >
+//       Email : <input value={email} onChange={handleEmail} type="text" />
+//       Password : <input value={password} onChange={handlePassword} type="text" /> 
+//       <button onClick={handleApi} >Login</button>
+//     </div>
+//   );
+// }
+
+// export default Email;
+
+
+
+
+// import React from 'react';
+
+// const Email = ({ email, password, setEmail, setPassword, handleLogin }) => {
+//     return (
+//         <div>
+//             <input
+//                 type="email"           
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//             />
+//             <input
+//                 type="password"
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//             />
+//             <button onClick={handleLogin}>Login</button>
+//         </div>
+//     );
+// };
+
+// export default Email;
+
